@@ -5,13 +5,13 @@ import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
-const CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || 'PUNE_CLIENT_ID_AICI';
+const CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || '1479877035919937607';
 
 function getRedirectUri() {
   if (typeof window === 'undefined') return '';
   return window.location.hostname === 'localhost'
-    ? 'http://localhost:3000/auth/callback'
-    : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://panel-pr.vercel.app'}/auth/callback`;
+    ? 'https://test-panel-alpha.vercel.app/auth/callback'
+    : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://test-panel-alpha.vercel.app'}/auth/callback`;
 }
 
 function LoginInner() {
