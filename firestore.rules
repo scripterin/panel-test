@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Acces deschis (ca panelul vechi) — fără Firebase Auth,
+    // autentificarea se face prin Discord OAuth + whitelist verificat în cod.
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
