@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import styles from './members.module.css';
 import UserCard from '../../components/UserCard';
@@ -100,6 +100,33 @@ export default function MembersPage() {
         ...editForm,
         updated_at: new Date().toISOString(),
       });
+
+      // Istoric promovări — dacă gradul s-a modificat
+      if (editForm.rank && editTarget.rank && editForm.rank !== editTarget.rank) {
+        await addDoc(collection(db, 'promotions'), {
+          member_id:   editTarget.id,
+          discord_id:  editTarget.discord_id || '',
+          full_name:   editForm.full_name || editTarget.full_name,
+          old_rank:    editTarget.rank,
+          new_rank:    editForm.rank,
+          changed_by:  user.full_name,
+          date:        new Date().toISOString(),
+        });
+      }
+
+      // Istoric inactivitate — dacă statusul devine Inactiv/Concediu (rămâne înregistrat permanent)
+      if (editForm.status && editTarget.status !== editForm.status &&
+          ['Inactiv', 'Concediu'].includes(editForm.status)) {
+        await addDoc(collection(db, 'inactivity_log'), {
+          member_id:  editTarget.id,
+          discord_id: editTarget.discord_id || '',
+          full_name:  editForm.full_name || editTarget.full_name,
+          rank:       editForm.rank || editTarget.rank,
+          status:     editForm.status,
+          date:       new Date().toISOString(),
+        });
+      }
+
       showToast('Modificările au fost salvate!');
       setEditTarget(null);
     } catch (e) {

@@ -110,12 +110,11 @@ export default function HubPage() {
       tc: '16,185,129',
       icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>,
     } : null,
-    {
-      id: 'rapoarte', label: 'Rapoarte', desc: 'În curând', path: null,
+    canWhitelist ? {
+      id: 'rapoarte', label: 'Rapoarte', desc: 'Bilunar & statistici', path: '/reports',
       tc: '59,130,246',
       icon: <path d="M18 20V10M12 20V4M6 20v-6"/>,
-      soon: true,
-    },
+    } : null,
     {
       id: 'info', label: 'Informații', desc: 'Regulament & reguli', path: null,
       tc: '236,72,153',
