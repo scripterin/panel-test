@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { collection, doc, addDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import styles from './members.module.css';
-import UserCard from '../../components/UserCard';
+import TopBar from '../../components/TopBar';
 
 
 const ALL_GRADES   = ['Conducere Spital', 'Supervizor PR', 'Manager PR', 'Adjunct PR', 'Membru PR'];
@@ -260,7 +260,7 @@ export default function MembersPage() {
         </div>
       )}
 
-      <UserCard user={user} backTo="/hub" />
+      <TopBar user={user} title="Membri"/>
 
       {toast && (
         <div className={`${styles.toast} ${toast.type === 'error' ? styles.toastError : styles.toastSuccess}`}>

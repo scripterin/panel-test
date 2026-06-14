@@ -65,7 +65,7 @@
 .logoutBtn:hover { color: #ef4444; border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.06); }
 
 /* ── Main ── */
-.main { margin-left: 0; flex: 1; padding: 76px 32px 40px; position: relative; z-index: 1; }
+.main { margin-left: 0; flex: 1; padding: 88px 24px 40px; position: relative; z-index: 1; }
 
 /* ── Header ── */
 .header {

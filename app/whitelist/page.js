@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './whitelist.module.css';
-import UserCard from '../../components/UserCard';
+import TopBar from '../../components/TopBar';
 import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 
@@ -316,7 +316,7 @@ export default function WhitelistPage() {
         </div>
       )}
 
-      <UserCard user={user} backTo="/hub" />
+      <TopBar user={user} title="Whitelist"/>
 
       {toast && (
         <div className={`${styles.toast} ${toast.type === 'error' ? styles.toastError : styles.toastSuccess}`}>

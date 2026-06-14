@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { collection, addDoc, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import UserCard from '../../components/UserCard';
+import TopBar from '../../components/TopBar';
 import styles from './dashboard.module.css';
 
 const EXCLUDE = ['Supervizor PR', 'Conducere Spital'];
@@ -158,7 +158,7 @@ export default function Dashboard() {
   return (
     <div className={styles.root}>
       <div className={styles.bg1}/><div className={styles.bg2}/><div className={styles.grid}/>
-      <UserCard user={user} title="Dashboard"/>
+      <TopBar user={user} title="Dashboard"/>
 
       <main className={styles.main}>
         {loading ? (

@@ -3,7 +3,7 @@
 .bg2 { position:fixed; bottom:-150px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.07) 0%,transparent 65%); pointer-events:none; z-index:0; }
 .grid { position:fixed; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(139,92,246,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.02) 1px,transparent 1px); background-size:52px 52px; }
 
-.main { position:relative; z-index:1; padding:80px 32px 40px; max-width:1300px; margin:0 auto; }
+.main { position:relative; z-index:1; padding:88px 24px 40px; max-width:1300px; margin:0 auto; }
 
 .loadState { display:flex; align-items:center; justify-content:center; height:60vh; }
 

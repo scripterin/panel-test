@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import UserCard from '../../components/UserCard';
+import TopBar from '../../components/TopBar';
 import styles from './reports.module.css';
 
 const CAN_VIEW = ['Adjunct PR', 'Manager PR', 'Supervizor PR', 'Conducere Spital'];
@@ -39,7 +39,6 @@ export default function ReportsPage() {
   const [events, setEvents] = useState([]);
   const [memberEvents, setMemberEvents] = useState([]);
   const [promotions, setPromotions] = useState([]);
-  const [sanctions, setSanctions] = useState([]);
   const [inactivityLog, setInactivityLog] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -60,7 +59,6 @@ export default function ReportsPage() {
       onSnapshot(collection(db, 'events'), s => { setEvents(s.docs.map(d => ({ id:d.id, ...d.data() }))); setLoading(false); }),
       onSnapshot(collection(db, 'member_events'), s => setMemberEvents(s.docs.map(d => ({ id:d.id, ...d.data() })))),
       onSnapshot(collection(db, 'promotions'), s => setPromotions(s.docs.map(d => ({ id:d.id, ...d.data() })))),
-      onSnapshot(collection(db, 'sanctions'), s => setSanctions(s.docs.map(d => ({ id:d.id, ...d.data() })))),
       onSnapshot(collection(db, 'inactivity_log'), s => setInactivityLog(s.docs.map(d => ({ id:d.id, ...d.data() })))),
     ];
     return () => unsubs.forEach(u => u());
@@ -87,9 +85,6 @@ export default function ReportsPage() {
       }).length;
       days.push({ date: d, count, label: RO_DAYS[d.getDay() === 0 ? 6 : d.getDay()-1], dayNum: d.getDate() });
     }
-
-    // Sancțiuni în perioadă
-    const periodSanctions = sanctions.filter(s => inRange(s.date || s.created_at, start, end));
 
     // Promovări în perioadă
     const periodPromotions = promotions.filter(p => inRange(p.date, start, end));
@@ -120,14 +115,13 @@ export default function ReportsPage() {
 
     return {
       eventCount: finishedEvents.length,
-      sanctionCount: periodSanctions.length,
       promotionCount: periodPromotions.length,
       inactiveCount: periodInactive.length,
       days,
       inactiveMembers: periodInactive,
       top,
     };
-  }, [events, sanctions, promotions, inactivityLog, memberEvents, members, start, end]);
+  }, [events, promotions, inactivityLog, memberEvents, members, start, end]);
 
   function downloadTxt() {
     const lines = [];
@@ -135,7 +129,6 @@ export default function ReportsPage() {
     lines.push(`Perioada: ${fmtDate(start)} - ${fmtDate(end)}`);
     lines.push('');
     lines.push(`Evenimente finalizate & încasate: ${report.eventCount}`);
-    lines.push(`Sancțiuni acordate: ${report.sanctionCount}`);
     lines.push(`Promovări: ${report.promotionCount}`);
     lines.push(`Membri inactivi/concediu înregistrați: ${report.inactiveCount}`);
     lines.push('');
@@ -163,12 +156,13 @@ export default function ReportsPage() {
 
   const maxCount = Math.max(...report.days.map(d => d.count), 1);
 
-  // Build smooth SVG path for the wave chart
-  const W = 1000, H = 200, PAD = 30;
-  const stepX = (W - PAD*2) / (PERIOD_LEN_DAYS - 1);
+  // Build smooth SVG path for the wave chart — labels integrated in same coordinate system
+  const W = 1000, H = 220, PAD_X = 24, PAD_TOP = 24, PAD_BOTTOM = 46;
+  const chartH = H - PAD_TOP - PAD_BOTTOM;
+  const stepX = (W - PAD_X*2) / (PERIOD_LEN_DAYS - 1);
   const points = report.days.map((d, i) => ({
-    x: PAD + i * stepX,
-    y: H - PAD - (d.count / maxCount) * (H - PAD*2 - 20),
+    x: PAD_X + i * stepX,
+    y: PAD_TOP + chartH - (d.count / maxCount) * chartH,
     ...d,
   }));
 
@@ -183,12 +177,13 @@ export default function ReportsPage() {
     return path;
   }
   const linePath = buildPath(points);
-  const areaPath = `${linePath} L ${points[points.length-1].x} ${H-PAD} L ${points[0].x} ${H-PAD} Z`;
+  const areaPath = `${linePath} L ${points[points.length-1].x} ${PAD_TOP+chartH} L ${points[0].x} ${PAD_TOP+chartH} Z`;
+  const todayStr = new Date().toDateString();
 
   return (
     <div className={styles.root}>
       <div className={styles.bg1}/><div className={styles.bg2}/><div className={styles.grid}/>
-      <UserCard user={user} title="Rapoarte"/>
+      <TopBar user={user} title="Rapoarte"/>
 
       <main className={styles.main}>
         <div className={styles.topRow}>
@@ -220,8 +215,6 @@ export default function ReportsPage() {
               {[
                 { label:'Evenimente', sub:'Această perioadă', value: report.eventCount, color:'139,92,246',
                   icon: <><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></> },
-                { label:'Sancțiuni', sub:'Această perioadă', value: report.sanctionCount, color:'245,158,11',
-                  icon: <><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></> },
                 { label:'Promovări', sub:'Modificări grad', value: report.promotionCount, color:'34,197,94',
                   icon: <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/> },
                 { label:'Inactivi', sub:'Status inactiv/concediu', value: report.inactiveCount, color:'99,102,241',
@@ -258,28 +251,37 @@ export default function ReportsPage() {
                     </defs>
                     <path d={areaPath} fill="url(#areaGrad)"/>
                     <path d={linePath} fill="none" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round"/>
-                    {points.map((p,i) => (
-                      <g key={i} onMouseEnter={() => setHoverPoint(i)} onMouseLeave={() => setHoverPoint(null)}>
-                        <circle cx={p.x} cy={p.y} r="14" fill="transparent"/>
-                        <circle cx={p.x} cy={p.y} r={hoverPoint===i ? 5 : 3.5} fill={p.count>0 ? '#a78bfa' : 'rgba(255,255,255,.15)'}
-                          stroke={hoverPoint===i ? '#fff' : 'none'} strokeWidth="1.5"
-                          style={{ transition:'r .15s' }}/>
-                        {hoverPoint === i && (
-                          <g>
-                            <rect x={p.x-22} y={p.y-38} width="44" height="24" rx="6" fill="#0f0c24" stroke="rgba(139,92,246,.4)"/>
-                            <text x={p.x} y={p.y-21} textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="var(--font-display)">{p.count}</text>
-                          </g>
-                        )}
-                      </g>
-                    ))}
+                    {points.map((p,i) => {
+                      const isToday = p.date.toDateString() === todayStr;
+                      return (
+                        <g key={i}>
+                          {/* hover hit area spans full column height */}
+                          <rect x={p.x - stepX/2} y={PAD_TOP} width={stepX} height={chartH}
+                            fill="transparent"
+                            onMouseEnter={() => setHoverPoint(i)} onMouseLeave={() => setHoverPoint(null)}/>
+                          <circle cx={p.x} cy={p.y} r={hoverPoint===i ? 5.5 : 3.5}
+                            fill={p.count>0 ? '#a78bfa' : 'rgba(255,255,255,.18)'}
+                            stroke={hoverPoint===i ? '#fff' : 'none'} strokeWidth="1.5"
+                            style={{ transition:'r .15s', pointerEvents:'none' }}/>
+                          {hoverPoint === i && (
+                            <g style={{ pointerEvents:'none' }}>
+                              <rect x={p.x-24} y={p.y-40} width="48" height="26" rx="7" fill="#13112a" stroke="rgba(139,92,246,.45)"/>
+                              <text x={p.x} y={p.y-22} textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="var(--font-display)">{p.count}</text>
+                            </g>
+                          )}
+                          {/* Day label + number, integrated in same coordinate system */}
+                          <text x={p.x} y={H - 26} textAnchor="middle" fontSize="13" fontWeight="600"
+                            fill={isToday ? '#a78bfa' : 'rgba(255,255,255,.32)'} fontFamily="var(--font-body)">
+                            {p.label}
+                          </text>
+                          <text x={p.x} y={H - 9} textAnchor="middle" fontSize="13" fontWeight="800"
+                            fill={isToday ? '#a78bfa' : 'rgba(255,255,255,.45)'} fontFamily="var(--font-display)">
+                            {p.dayNum}
+                          </text>
+                        </g>
+                      );
+                    })}
                   </svg>
-                  <div className={styles.chartLabels}>
-                    {report.days.map((d,i) => (
-                      <div key={i} className={`${styles.chartLabel} ${new Date().toDateString()===d.date.toDateString() ? styles.chartLabelToday : ''}`}>
-                        <span>{d.label}</span><span className={styles.chartLabelNum}>{d.dayNum}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
 

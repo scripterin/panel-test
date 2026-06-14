@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { collection, doc, addDoc, updateDoc, setDoc, deleteDoc, getDoc, onSnapshot, query, orderBy, where } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import UserCard from '../../components/UserCard';
+import TopBar from '../../components/TopBar';
 import styles from './events.module.css';
 
 const CAN_MANAGE = ['Adjunct PR', 'Manager PR', 'Supervizor PR', 'Conducere Spital'];
@@ -171,7 +171,7 @@ export default function EventsPage() {
   return (
     <div className={styles.root}>
       <div className={styles.bg1}/><div className={styles.bg2}/><div className={styles.grid}/>
-      <UserCard user={user} title="Evenimente"/>
+      <TopBar user={user} title="Evenimente"/>
 
       <main className={styles.main}>
         <div className={styles.topRow}>

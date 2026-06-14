@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { collection, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import TopBar from '../../components/TopBar';
 import styles from './hub.module.css';
 
 const CAN_MANAGE = ['Adjunct PR', 'Manager PR', 'Supervizor PR', 'Conducere Spital'];
@@ -129,26 +130,7 @@ export default function HubPage() {
       <div className={styles.bgBlob2}/>
 
       {/* Top bar */}
-      <header className={styles.topbar}>
-        <div className={styles.brand}>
-          <img src="/logo_pr.png" alt="PR" className={styles.brandLogo}/>
-          <span className={styles.brandText}>Panel PR</span>
-        </div>
-        <div className={styles.userChip}>
-          <div className={styles.userText}>
-            <span className={styles.userName}>{user.full_name}</span>
-            <span className={styles.userRank}>{user.rank}</span>
-          </div>
-          <img src={user.discord_avatar || '/logo_pr.png'} alt="" className={styles.userAvatar}/>
-          <button className={styles.logoutBtn} onClick={logout} title="Deconectare">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-          </button>
-        </div>
-      </header>
+      <TopBar user={user} isHub={true}/>
 
       <main className={styles.main}>
 

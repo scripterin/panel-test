@@ -2,7 +2,7 @@
 .bg1{position:fixed;top:-180px;left:-120px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,.1) 0%,transparent 65%);pointer-events:none;z-index:0;}
 .bg2{position:fixed;bottom:-150px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.07) 0%,transparent 65%);pointer-events:none;z-index:0;}
 .grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(139,92,246,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.02) 1px,transparent 1px);background-size:52px 52px;}
-.main{position:relative;z-index:1;padding:76px 32px 40px;max-width:1300px;margin:0 auto;}
+.main{position:relative;z-index:1;padding:88px 24px 40px;max-width:1300px;margin:0 auto;}
 
 .topRow{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap;}
 .periodNav{display:flex;align-items:center;gap:10px;}
@@ -21,7 +21,7 @@
 .loadState{display:flex;align-items:center;justify-content:center;padding:100px;}
 
 /* Stats */
-.statsRow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;}
+.statsRow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
 .statCard{background:var(--surface);border:1px solid var(--border3);border-radius:var(--radius);padding:18px 20px;display:flex;flex-direction:column;gap:6px;backdrop-filter:blur(12px);animation:fadeUp .5s cubic-bezier(.16,1,.3,1) both;position:relative;overflow:hidden;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .statIcon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(var(--c),.14);color:rgb(var(--c));margin-bottom:4px;}
@@ -40,12 +40,7 @@
 
 /* Chart */
 .chartWrap{display:flex;flex-direction:column;}
-.chart{width:100%;height:160px;overflow:visible;}
-.chartLabels{display:grid;grid-template-columns:repeat(14,1fr);margin-top:4px;padding:0 30px;}
-.chartLabel{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--t4);}
-.chartLabelNum{font-weight:700;color:var(--t3);}
-.chartLabelToday{color:#a78bfa;}
-.chartLabelToday .chartLabelNum{color:#a78bfa;}
+.chart{width:100%;height:200px;overflow:visible;display:block;}
 
 /* Inactive members */
 .inactiveList{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;}
@@ -70,12 +65,12 @@
 
 /* Responsive */
 @media (max-width: 1000px) {
-  .statsRow{grid-template-columns:repeat(2,1fr);}
+  .statsRow{grid-template-columns:repeat(3,1fr);}
   .midRow{grid-template-columns:1fr;}
   .chartLabels{padding:0 20px;}
 }
 @media (max-width: 600px) {
-  .main{padding:76px 16px 30px;}
+  .main{padding:82px 16px 30px;}
   .statsRow{grid-template-columns:repeat(2,1fr);gap:8px;}
   .statCard{padding:14px;}
   .statVal{font-size:24px;}
