@@ -2,7 +2,7 @@
   position: fixed; top: 14px; left: 14px; right: 14px; z-index: 200;
   height: 58px; padding: 0 10px 0 18px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(20,17,42,.72);
+  background: rgba(28,31,43,.72);
   border: 1px solid rgba(139,92,246,.16);
   border-radius: 18px;
   backdrop-filter: blur(22px);

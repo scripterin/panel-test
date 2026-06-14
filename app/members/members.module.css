@@ -1,19 +1,19 @@
 /* ── Root ── */
 .root {
-  display: flex; min-height: 100vh;
-  background: #0a0820; font-family: var(--font-body);
+  min-height: 100vh;
+  background: var(--bg); font-family: var(--font-body);
   position: relative; overflow: hidden;
 }
 .bgOrb1 {
   position: fixed; top: -200px; left: -100px;
   width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(109,40,217,.09) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(109,40,217,.045) 0%, transparent 65%);
   pointer-events: none; z-index: 0;
 }
 .bgOrb2 {
   position: fixed; bottom: -150px; right: -100px;
   width: 500px; height: 500px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(99,102,241,.07) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(99,102,241,.04) 0%, transparent 65%);
   pointer-events: none; z-index: 0;
 }
 .bgGrid {
@@ -24,48 +24,8 @@
   background-size: 48px 48px;
 }
 
-/* ── Sidebar ── */
-.sidebar {
-  position: fixed; left: 0; top: 0; bottom: 0; width: 240px; z-index: 100;
-  background: rgba(16,13,35,.92); border-right: 1px solid rgba(139,92,246,.1);
-  backdrop-filter: blur(20px); display: flex; flex-direction: column;
-  justify-content: space-between; padding: 24px 0 20px;
-}
-.sideTop { flex: 1; }
-.sideLogo {
-  display: flex; align-items: center; gap: 10px;
-  padding: 0 20px 28px; border-bottom: 1px solid rgba(139,92,246,.08);
-}
-.sideLogo img { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 12px rgba(139,92,246,.3); }
-.sideLogoText { display: flex; flex-direction: column; }
-.sideTitle { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: #fff; line-height: 1.2; }
-.sideSub { font-size: 10px; color: rgba(255,255,255,.25); letter-spacing: .4px; }
-.nav { padding: 20px 12px; display: flex; flex-direction: column; gap: 2px; }
-.navItem {
-  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-  border-radius: 10px; font-size: 13px; font-weight: 500;
-  color: rgba(255,255,255,.45); cursor: pointer; transition: all .15s;
-  border: 1px solid transparent;
-}
-.navItem svg { width: 16px; height: 16px; flex-shrink: 0; }
-.navItem:hover { color: rgba(255,255,255,.8); background: rgba(139,92,246,.08); }
-.navActive { color: #a78bfa !important; background: rgba(139,92,246,.12) !important; border-color: rgba(139,92,246,.2) !important; }
-.sideUser {
-  display: flex; align-items: center; gap: 10px;
-  padding: 16px 20px 0; border-top: 1px solid rgba(139,92,246,.08);
-}
-.sideAvatar { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(139,92,246,.3); }
-.sideUserInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.sideUserName { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sideUserRank { font-size: 10px; color: rgba(255,255,255,.3); }
-.logoutBtn {
-  background: none; border: 1px solid rgba(255,255,255,.08); border-radius: 8px;
-  padding: 6px; color: rgba(255,255,255,.3); display: flex; align-items: center; transition: all .15s;
-}
-.logoutBtn:hover { color: #ef4444; border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.06); }
-
 /* ── Main ── */
-.main { margin-left: 0; flex: 1; padding: 88px 24px 40px; position: relative; z-index: 1; }
+.main { padding: 88px 24px 40px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
 
 /* ── Header ── */
 .header {
@@ -76,7 +36,7 @@
 .headerSub { font-size: 12px; color: rgba(255,255,255,.3); }
 .headerSearch {
   display: flex; align-items: center; gap: 10px;
-  background: rgba(20,17,40,.8); border: 1px solid rgba(139,92,246,.15);
+  background: var(--surface); border: 1px solid var(--border3);
   border-radius: 12px; padding: 10px 14px; flex: 1; max-width: 380px; transition: border-color .2s;
 }
 .headerSearch:focus-within { border-color: rgba(139,92,246,.4); }
@@ -105,7 +65,7 @@
 
 /* ── Table ── */
 .tableWrap {
-  background: rgba(20,17,40,.7); border: 1px solid rgba(139,92,246,.1);
+  background: var(--surface); border: 1px solid var(--border3);
   border-radius: 14px; overflow: hidden; backdrop-filter: blur(12px);
 }
 .table { width: 100%; border-collapse: collapse; }
@@ -179,7 +139,7 @@
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .modal {
-  background: #16133e; border: 1px solid rgba(139,92,246,.2);
+  background: var(--bg3); border: 1px solid rgba(139,92,246,.2);
   border-radius: 22px; padding: 28px; width: 560px; max-width: 95vw;
   max-height: 90vh; overflow-y: auto;
   box-shadow: 0 40px 80px rgba(0,0,0,.7);
@@ -222,7 +182,7 @@
 .input:focus, .select:focus, .textarea:focus { border-color: rgba(139,92,246,.5); background: rgba(139,92,246,.04); }
 .input::placeholder, .textarea::placeholder { color: rgba(255,255,255,.2); }
 .select { appearance: none; cursor: pointer; }
-.select option { background: #16133e; }
+.select option { background: var(--bg3); }
 .textarea { resize: vertical; min-height: 80px; }
 
 .statusGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -275,3 +235,36 @@
 }
 .toastSuccess { background: rgba(34,197,94,.15); border: 1px solid rgba(34,197,94,.3); color: #4ade80; }
 .toastError   { background: rgba(239,68,68,.15);  border: 1px solid rgba(239,68,68,.3);  color: #f87171; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .main { padding: 88px 18px 40px; }
+  .header { flex-direction: column; align-items: stretch; gap: 14px; }
+  .headerSearch { max-width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .main { padding: 78px 12px 30px; }
+  .headerTitle { font-size: 22px; }
+  .tableWrap { overflow-x: auto; border-radius: 12px; }
+  .table { min-width: 720px; }
+
+  .overlay { padding: 0; align-items: flex-end; }
+  .modal { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; max-height: 92vh; padding: 20px; }
+  .formGrid { grid-template-columns: 1fr; gap: 12px; }
+  .statusGrid { grid-template-columns: repeat(2, 1fr); }
+  .modalAvatar { width: 40px; height: 40px; }
+  .modalName { font-size: 14px; }
+
+  .toast { left: 14px; right: 14px; bottom: 14px; }
+}
+
+/* Landscape phone */
+@media (max-width: 900px) and (orientation: landscape) {
+  .main { padding: 70px 16px 24px; }
+  .header { flex-direction: row; align-items: center; }
+  .overlay { align-items: center; padding: 14px; }
+  .modal { max-height: 88vh; border-radius: 18px; }
+  .formGrid { grid-template-columns: 1fr 1fr; }
+  .statusGrid { grid-template-columns: repeat(4, 1fr); }
+}

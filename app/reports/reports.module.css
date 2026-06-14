@@ -1,6 +1,6 @@
 .root{min-height:100vh;background:var(--bg);font-family:var(--font-body);position:relative;overflow:hidden;}
-.bg1{position:fixed;top:-180px;left:-120px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,.1) 0%,transparent 65%);pointer-events:none;z-index:0;}
-.bg2{position:fixed;bottom:-150px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.07) 0%,transparent 65%);pointer-events:none;z-index:0;}
+.bg1{position:fixed;top:-180px;left:-120px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,.05) 0%,transparent 65%);pointer-events:none;z-index:0;}
+.bg2{position:fixed;bottom:-150px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.04) 0%,transparent 65%);pointer-events:none;z-index:0;}
 .grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(139,92,246,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.02) 1px,transparent 1px);background-size:52px 52px;}
 .main{position:relative;z-index:1;padding:88px 24px 40px;max-width:1300px;margin:0 auto;}
 
@@ -67,13 +67,28 @@
 @media (max-width: 1000px) {
   .statsRow{grid-template-columns:repeat(3,1fr);}
   .midRow{grid-template-columns:1fr;}
-  .chartLabels{padding:0 20px;}
 }
 @media (max-width: 600px) {
   .main{padding:82px 16px 30px;}
   .statsRow{grid-template-columns:repeat(2,1fr);gap:8px;}
   .statCard{padding:14px;}
   .statVal{font-size:24px;}
-  .chartLabels{display:none;}
   .table th:nth-child(3),.table td:nth-child(3){display:none;}
+}
+
+/* Additional responsive */
+@media (max-width: 600px) {
+  .topRow { flex-direction: column; align-items: stretch; }
+  .periodLabel { justify-content: center; flex-wrap: wrap; }
+  .downloadBtn { justify-content: center; }
+  .chart { height: 170px; }
+  .tableWrap { overflow-x: auto; }
+  .table { min-width: 480px; }
+}
+
+/* Landscape phone */
+@media (max-width: 900px) and (orientation: landscape) {
+  .main { padding: 70px 16px 24px; }
+  .statsRow { grid-template-columns: repeat(3, 1fr); }
+  .midRow { grid-template-columns: 1.5fr 1fr; }
 }

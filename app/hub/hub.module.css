@@ -10,12 +10,12 @@
 
 .bgBlob1 {
   position: fixed; top: -200px; right: -150px; width: 600px; height: 600px;
-  border-radius: 50%; background: radial-gradient(circle, rgba(139,92,246,.13) 0%, transparent 65%);
+  border-radius: 50%; background: radial-gradient(circle, rgba(139,92,246,.08) 0%, transparent 65%);
   pointer-events: none; z-index: 0; filter: blur(10px);
 }
 .bgBlob2 {
   position: fixed; bottom: -250px; left: -180px; width: 550px; height: 550px;
-  border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,.09) 0%, transparent 65%);
+  border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,.05) 0%, transparent 65%);
   pointer-events: none; z-index: 0; filter: blur(10px);
 }
 
@@ -29,8 +29,8 @@
 
 /* ── Hero banner ── */
 .hero {
-  background: linear-gradient(120deg, rgba(139,92,246,.2) 0%, rgba(99,102,241,.1) 60%, rgba(20,17,40,.35) 100%);
-  border: 1px solid rgba(139,92,246,.22);
+  background: linear-gradient(120deg, rgba(139,92,246,.16) 0%, rgba(99,102,241,.08) 60%, var(--bg3) 100%);
+  border: 1px solid rgba(139,92,246,.18);
   border-radius: var(--radius-lg);
   padding: 30px 34px;
   display: flex; align-items: center; justify-content: space-between;

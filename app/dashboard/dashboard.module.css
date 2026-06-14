@@ -1,6 +1,6 @@
 .root { min-height:100vh; background:var(--bg); font-family:var(--font-body); position:relative; overflow:hidden; }
-.bg1 { position:fixed; top:-180px; left:-120px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(109,40,217,.1) 0%,transparent 65%); pointer-events:none; z-index:0; }
-.bg2 { position:fixed; bottom:-150px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.07) 0%,transparent 65%); pointer-events:none; z-index:0; }
+.bg1 { position:fixed; top:-180px; left:-120px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(109,40,217,.05) 0%,transparent 65%); pointer-events:none; z-index:0; }
+.bg2 { position:fixed; bottom:-150px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.04) 0%,transparent 65%); pointer-events:none; z-index:0; }
 .grid { position:fixed; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(139,92,246,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.02) 1px,transparent 1px); background-size:52px 52px; }
 
 .main { position:relative; z-index:1; padding:88px 24px 40px; max-width:1300px; margin:0 auto; }
@@ -11,7 +11,7 @@
 .statsRow { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px; }
 .statCard {
   position:relative; border-radius:18px; padding:20px;
-  background:rgba(16,13,35,.75); border:1px solid rgba(255,255,255,.06);
+  background:var(--surface); border:1px solid var(--border3);
   backdrop-filter:blur(14px); overflow:hidden;
   display:flex; align-items:center; gap:14px;
   animation:fadeUp .5s cubic-bezier(.16,1,.3,1) both;
@@ -28,7 +28,7 @@
 
 /* Cards */
 .midRow,.botRow { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
-.card { background:rgba(16,13,35,.75); border:1px solid rgba(139,92,246,.1); border-radius:18px; padding:20px; backdrop-filter:blur(14px); animation:fadeUp .5s cubic-bezier(.16,1,.3,1) .15s both; }
+.card { background:var(--surface); border:1px solid var(--border3); border-radius:18px; padding:20px; backdrop-filter:blur(14px); animation:fadeUp .5s cubic-bezier(.16,1,.3,1) .15s both; }
 .cardHead { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
 .cardTitle { font-family:var(--font-display); font-size:13px; font-weight:700; color:var(--t2); display:flex; align-items:center; gap:7px; }
 .cardTitle svg { color:var(--t4); }
@@ -68,7 +68,7 @@
 /* Modal */
 .overlay { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.78); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; animation:fadeIn .2s ease; }
 @keyframes fadeIn { from{opacity:0}to{opacity:1} }
-.modal { background:#12103a; border:1px solid rgba(139,92,246,.2); border-radius:22px; padding:26px; width:480px; max-width:95vw; box-shadow:0 40px 80px rgba(0,0,0,.7); animation:modalIn .22s cubic-bezier(.16,1,.3,1); }
+.modal { background:var(--bg3); border:1px solid rgba(139,92,246,.2); border-radius:22px; padding:26px; width:480px; max-width:95vw; box-shadow:0 40px 80px rgba(0,0,0,.7); animation:modalIn .22s cubic-bezier(.16,1,.3,1); }
 @keyframes modalIn { from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)} }
 .modalHead { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
 .modalHead h3 { font-family:var(--font-display); font-size:16px; font-weight:700; color:#fff; }
@@ -90,3 +90,32 @@
 @keyframes toastIn { from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)} }
 .toastOk { background:rgba(34,197,94,.14); border:1px solid rgba(34,197,94,.3); color:#4ade80; }
 .toastErr { background:rgba(239,68,68,.14); border:1px solid rgba(239,68,68,.3); color:#f87171; }
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+  .statsRow { grid-template-columns: repeat(2, 1fr); }
+  .midRow, .botRow { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .main { padding: 78px 14px 30px; }
+  .statsRow { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .statCard { padding: 14px; gap: 10px; }
+  .statIcon { width: 36px; height: 36px; }
+  .statVal { font-size: 24px; }
+  .statLabel { font-size: 11px; }
+  .card { padding: 16px; }
+
+  .overlay { padding: 0; align-items: flex-end; }
+  .modal { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; padding: 20px; }
+  .toast { left: 14px; right: 14px; bottom: 14px; }
+}
+
+/* Landscape phone */
+@media (max-width: 900px) and (orientation: landscape) {
+  .main { padding: 70px 16px 24px; }
+  .statsRow { grid-template-columns: repeat(4, 1fr); }
+  .midRow, .botRow { grid-template-columns: 1fr 1fr; }
+  .overlay { align-items: center; padding: 14px; }
+  .modal { border-radius: 18px; max-height: 88vh; overflow-y: auto; }
+}

@@ -6,23 +6,23 @@
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Core palette */
-  --bg:    #08061a;
-  --bg2:   #0d0b22;
-  --bg3:   #131028;
-  --bg4:   #19152e;
-  --surface: rgba(255,255,255,.05);
-  --surface2: rgba(255,255,255,.08);
+  --bg:    #0f1117;
+  --bg2:   #161922;
+  --bg3:   #1c1f2b;
+  --bg4:   #232734;
+  --surface: rgba(255,255,255,.045);
+  --surface2: rgba(255,255,255,.075);
 
-  --border:  rgba(139,92,246,.2);
-  --border2: rgba(139,92,246,.3);
-  --border3: rgba(255,255,255,.1);
+  --border:  rgba(139,92,246,.18);
+  --border2: rgba(139,92,246,.28);
+  --border3: rgba(255,255,255,.08);
 
   /* Brand */
   --p:  #8b5cf6;
   --p2: #7c3aed;
   --p3: #a78bfa;
   --p4: #6366f1;
-  --p5: rgba(139,92,246,.15);
+  --p5: rgba(139,92,246,.14);
 
   /* Accent colors */
   --green:  #22c55e;
@@ -33,9 +33,9 @@
   --teal:   #14b8a6;
 
   /* Text */
-  --t1: rgba(255,255,255,.96);
-  --t2: rgba(255,255,255,.68);
-  --t3: rgba(255,255,255,.4);
+  --t1: rgba(255,255,255,.95);
+  --t2: rgba(255,255,255,.62);
+  --t3: rgba(255,255,255,.38);
   --t4: rgba(255,255,255,.2);
 
   --radius-sm: 8px;
