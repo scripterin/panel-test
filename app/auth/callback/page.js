@@ -46,8 +46,10 @@ function CallbackInner() {
           discord_id:     discordId,
           discord_tag:    discordTag,
           discord_avatar: discordAvatar || existing?.discord_avatar || '',
-          full_name:      entry.full_name,
-          rank:           entry.rank,
+          // Gradul/numele din 'members' sunt sursa de adevăr după prima logare —
+          // whitelist se folosește doar pentru a popula un membru nou.
+          full_name:      existing?.full_name ?? entry.full_name,
+          rank:           existing?.rank      ?? entry.rank,
           status:         existing?.status || 'Activ',
           callsign:       existing?.callsign    ?? entry.callsign    ?? '',
           employee_id:    existing?.employee_id ?? entry.employee_id ?? '',

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { collection, doc, addDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import styles from './members.module.css';
 import TopBar from '../../components/TopBar';
@@ -24,11 +24,11 @@ const STATUS_COLORS  = {
 };
 
 const GRADE_ACCENT = {
-  'Membru PR':        '#8b5cf6',
+  'Membru PR':        '#9d7bff',
   'Adjunct PR':       '#6366f1',
-  'Manager PR':       '#f59e0b',
-  'Supervizor PR':    '#3b82f6',
-  'Conducere Spital': '#10b981',
+  'Manager PR':       '#ffb454',
+  'Supervizor PR':    '#5eb3f5',
+  'Conducere Spital': '#3ddc84',
 };
 
 const sortByGrade = arr => [...arr].sort((a, b) => GRADE_ORDER.indexOf(a.rank) - GRADE_ORDER.indexOf(b.rank));
@@ -100,6 +100,19 @@ export default function MembersPage() {
         ...editForm,
         updated_at: new Date().toISOString(),
       });
+
+      // Sincronizează whitelist (grad + nume) ca să nu rămână date vechi
+      // care ar suprascrie gradul la următoarea logare
+      if (editTarget.discord_id) {
+        const wlRef = doc(db, 'whitelist', editTarget.discord_id);
+        const wlSnap = await getDoc(wlRef);
+        if (wlSnap.exists()) {
+          await updateDoc(wlRef, {
+            rank: editForm.rank || editTarget.rank,
+            full_name: editForm.full_name || editTarget.full_name,
+          });
+        }
+      }
 
       // Istoric promovări — dacă gradul s-a modificat
       if (editForm.rank && editTarget.rank && editForm.rank !== editTarget.rank) {
@@ -176,9 +189,9 @@ export default function MembersPage() {
           <div className={styles.loadState}><div className={styles.spinner}/><span>Se încarcă membrii...</span></div>
         ) : (
           <div className={styles.allSections}>
-            <MemberSection title="Relații Publice"  members={prMembers}   accent="#8b5cf6" canEdit={canEdit} onEdit={openEdit} statusColors={STATUS_COLORS}/>
-            {supMembers.length  > 0 && <MemberSection title="Supervizori PR"   members={supMembers}  accent="#3b82f6" canEdit={canEdit} onEdit={openEdit} statusColors={STATUS_COLORS}/>}
-            {hospMembers.length > 0 && <MemberSection title="Conducere Spital" members={hospMembers} accent="#10b981" canEdit={canEdit} onEdit={openEdit} statusColors={STATUS_COLORS}/>}
+            <MemberSection title="Relații Publice"  members={prMembers}   accent="#9d7bff" canEdit={canEdit} onEdit={openEdit} statusColors={STATUS_COLORS}/>
+            {supMembers.length  > 0 && <MemberSection title="Supervizori PR"   members={supMembers}  accent="#5eb3f5" canEdit={canEdit} onEdit={openEdit} statusColors={STATUS_COLORS}/>}
+            {hospMembers.length > 0 && <MemberSection title="Conducere Spital" members={hospMembers} accent="#3ddc84" canEdit={canEdit} onEdit={openEdit} statusColors={STATUS_COLORS}/>}
           </div>
         )}
       </main>

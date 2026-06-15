@@ -19,12 +19,12 @@ const REACTIONS = [
   { key:'plaja',  emoji:'🏖️', label:'Concediu' },
 ];
 const EV_STATUS = [
-  { key:'in_asteptare', label:'În așteptare', color:'#f59e0b' },
-  { key:'finalizat',    label:'Finalizat',    color:'#22c55e' },
+  { key:'in_asteptare', label:'În așteptare', color:'#f59e0b', rgb:'255,180,84' },
+  { key:'finalizat',    label:'Finalizat',    color:'#22c55e', rgb:'61,220,132' },
 ];
 const FIN_STATUS = [
-  { key:'neincasat', label:'Neîncasat', color:'#ef4444' },
-  { key:'incasat',   label:'Încasat',   color:'#22c55e' },
+  { key:'neincasat', label:'Neîncasat', color:'#ef4444', rgb:'255,107,107' },
+  { key:'incasat',   label:'Încasat',   color:'#22c55e', rgb:'61,220,132' },
 ];
 
 export default function EventsPage() {
@@ -38,7 +38,7 @@ export default function EventsPage() {
   const [postModal,  setPostModal]  = useState(false);
   const [offerModal, setOfferModal] = useState(false);
   const [form, setForm] = useState({ date:'', time:'', type:'', organizer_name:'', location:'', phone:'', assistance_type:'medical_1', image_url:'' });
-  const [offerForm, setOfferForm] = useState({ member_id:'', event_id:'', event_date:'' });
+  const [offerForm, setOfferForm] = useState({ member_id:'', event_date:'' });
   const [saving,  setSaving]  = useState(false);
   const [toast,   setToast]   = useState(null);
   const toastRef   = useRef();
@@ -152,18 +152,18 @@ export default function EventsPage() {
   }
 
   async function submitOffer() {
-    if (!offerForm.member_id||!offerForm.event_id||!offerForm.event_date) {
+    if (!offerForm.member_id||!offerForm.event_date) {
       showToast('Completează toate câmpurile.','error'); return;
     }
     setSaving(true);
     try {
       const member = members.find(m => m.id === offerForm.member_id);
       await addDoc(collection(db, 'member_events'), {
-        event_id: offerForm.event_id, member_id: offerForm.member_id,
+        member_id: offerForm.member_id,
         member_name: member?.full_name||'', event_date: offerForm.event_date,
         offered_by: user.full_name, created_at: new Date().toISOString(),
       });
-      showToast('Eveniment oferit!'); setOfferModal(false); setOfferForm({ member_id:'', event_id:'', event_date:'' });
+      showToast('Eveniment oferit!'); setOfferModal(false); setOfferForm({ member_id:'', event_date:'' });
     } catch (e) { showToast('Eroare.','error'); }
     setSaving(false);
   }
@@ -215,10 +215,10 @@ export default function EventsPage() {
                 </div>
                 <div className={styles.dmBadges}>
                   {EV_STATUS.map(s => openEvent.event_status===s.key && (
-                    <span key={s.key} className={styles.dmBadge} style={{ color:s.color, background:s.color+'14', borderColor:s.color+'44' }}>{s.label}</span>
+                    <span key={s.key} className={styles.dmBadge} style={{ color:`rgb(${s.rgb})`, background:`rgba(${s.rgb},.14)` }}>{s.label}</span>
                   ))}
                   {FIN_STATUS.map(s => openEvent.financial_status===s.key && (
-                    <span key={s.key} className={styles.dmBadge} style={{ color:s.color, background:s.color+'14', borderColor:s.color+'44' }}>{s.label}</span>
+                    <span key={s.key} className={styles.dmBadge} style={{ color:`rgb(${s.rgb})`, background:`rgba(${s.rgb},.14)` }}>{s.label}</span>
                   ))}
                 </div>
               </div>
@@ -300,7 +300,7 @@ export default function EventsPage() {
                 <div className={styles.flabel}>Tip Asistență *</div>
                 <div className={styles.assistGrid}>
                   {Object.entries(ASSISTANCE).map(([key,val]) => (
-                    <button key={key} className={`${styles.assistCard} ${form.assistance_type===key?styles.assistActive:''}`} style={{'--c': key==='medical_1'?'#8b5cf6':'#6366f1'}} onClick={()=>setForm(f=>({...f,assistance_type:key}))}>
+                    <button key={key} className={`${styles.assistCard} ${form.assistance_type===key?styles.assistActive:''}`} style={{'--c': key==='medical_1'?'157,123,255':'99,102,241'}} onClick={()=>setForm(f=>({...f,assistance_type:key}))}>
                       <span style={{fontSize:22}}>{val.icon}</span>
                       <div><div className={styles.assistLabel}>{val.label}</div><div className={styles.assistPrice}>{val.price}</div><div className={styles.assistExtra}>{val.extra}</div></div>
                     </button>
@@ -334,7 +334,6 @@ export default function EventsPage() {
           <div className={`${styles.modal} ${styles.modalSm}`} onClick={e=>e.stopPropagation()}>
             <div className={styles.mhead}><h3>Oferă Eveniment</h3><button className={styles.mx} onClick={()=>setOfferModal(false)}>✕</button></div>
             <div style={{display:'flex',flexDirection:'column',gap:13}}>
-              <Field label="Eveniment"><select className={styles.sel} value={offerForm.event_id} onChange={e=>setOfferForm(f=>({...f,event_id:e.target.value}))}><option value="">-- Selectează --</option>{events.map(ev=><option key={ev.id} value={ev.id}>{ev.type} · {new Date(ev.date).toLocaleDateString('ro-RO')}</option>)}</select></Field>
               <Field label="Membru"><select className={styles.sel} value={offerForm.member_id} onChange={e=>setOfferForm(f=>({...f,member_id:e.target.value}))}><option value="">-- Selectează --</option>{members.map(m=><option key={m.id} value={m.id}>{m.full_name} · {m.rank}</option>)}</select></Field>
               <Field label="Data Participării"><input type="date" className={styles.inp} value={offerForm.event_date} onChange={e=>setOfferForm(f=>({...f,event_date:e.target.value}))}/></Field>
             </div>
@@ -355,25 +354,46 @@ function EventCard({ ev, index, onClick }) {
   const ast   = ASSISTANCE[ev.assistance_type];
   const evSt  = EV_STATUS.find(s => s.key === ev.event_status);
   const finSt = FIN_STATUS.find(s => s.key === ev.financial_status);
+  const accent = ev.assistance_type === 'medical_2' ? '99,102,241' : '157,123,255';
+  const dateObj = new Date(ev.date);
+
   return (
-    <div className={styles.evCard} style={{ animationDelay:`${index*.04}s` }} onClick={onClick}>
-      <div className={styles.evCardTop}>
-        <span className={styles.evType}>{ev.type}</span>
-        <div className={styles.evBadges}>
-          {evSt  && <span className={styles.evBadge} style={{ color:evSt.color,  background:evSt.color+'14',  borderColor:evSt.color+'44'  }}>{evSt.label}</span>}
-          {finSt && <span className={styles.evBadge} style={{ color:finSt.color, background:finSt.color+'14', borderColor:finSt.color+'44' }}>{finSt.label}</span>}
+    <button className={styles.evCard} style={{ animationDelay:`${index*.04}s`, '--accent': accent }} onClick={onClick}>
+      <div className={styles.evDateBlock}>
+        <span className={styles.evDateDay}>{dateObj.toLocaleDateString('ro-RO',{day:'2-digit'})}</span>
+        <span className={styles.evDateMonth}>{dateObj.toLocaleDateString('ro-RO',{month:'short'})}</span>
+      </div>
+
+      <div className={styles.evMain}>
+        <div className={styles.evCardTop}>
+          <span className={styles.evType}>{ev.type}</span>
+          {ev.responsible_callsign && <span className={styles.csBadge}>{ev.responsible_callsign}</span>}
+        </div>
+
+        <div className={styles.evRows}>
+          <div className={styles.evRow}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>{ev.location}</span>
+          </div>
+          <div className={styles.evRow}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>{ev.time}</span>
+          </div>
+          <div className={styles.evRow}>
+            <span className={styles.evAssistIcon}>{ast?.icon}</span>
+            <span className={styles.evAssistLabel}>{ast?.label}</span>
+          </div>
+        </div>
+
+        <div className={styles.evFoot}>
+          <div className={styles.evBadges}>
+            {evSt  && <span className={styles.evBadge} style={{ '--bc':evSt.rgb }}>{evSt.label}</span>}
+            {finSt && <span className={styles.evBadge} style={{ '--bc':finSt.rgb }}>{finSt.label}</span>}
+          </div>
+          <span className={styles.evOrg}>{ev.organizer_name}</span>
         </div>
       </div>
-      <div className={styles.evRows}>
-        <div className={styles.evRow}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>{new Date(ev.date).toLocaleDateString('ro-RO')} · {ev.time}</span></div>
-        <div className={styles.evRow}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>{ev.location}</span></div>
-        <div className={styles.evRow}><span style={{fontSize:13}}>{ast?.icon}</span><span>{ast?.label}</span></div>
-      </div>
-      <div className={styles.evFoot}>
-        <span className={styles.evOrg}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="11" height="11"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>{ev.organizer_name}</span>
-        {ev.responsible_callsign && <span className={styles.csBadge}>{ev.responsible_callsign}</span>}
-      </div>
-    </div>
+    </button>
   );
 }
 
@@ -385,10 +405,10 @@ function StatusBlock({ title, opts, current, setBy, setAt, canEdit, onChange }) 
         {opts.map(opt => (
           <button key={opt.key}
             className={`${styles.statusBtn} ${current===opt.key?styles.statusActive:''}`}
-            style={current===opt.key?{color:opt.color,background:opt.color+'16',borderColor:opt.color+'55'}:{}}
+            style={current===opt.key?{color:`rgb(${opt.rgb})`,background:`rgba(${opt.rgb},.16)`,borderColor:`rgba(${opt.rgb},.4)`}:{}}
             onClick={() => canEdit && onChange(opt.key)}
             disabled={!canEdit}>
-            <span className={styles.sDot} style={{background:current===opt.key?opt.color:'rgba(255,255,255,.2)'}}/>
+            <span className={styles.sDot} style={{background:current===opt.key?`rgb(${opt.rgb})`:'var(--t4)'}}/>
             {opt.label}
           </button>
         ))}

@@ -213,9 +213,9 @@ export default function ReportsPage() {
             {/* Stat cards */}
             <div className={styles.statsRow}>
               {[
-                { label:'Evenimente', sub:'Această perioadă', value: report.eventCount, color:'139,92,246',
+                { label:'Evenimente', sub:'Această perioadă', value: report.eventCount, color:'157,123,255',
                   icon: <><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></> },
-                { label:'Promovări', sub:'Modificări grad', value: report.promotionCount, color:'34,197,94',
+                { label:'Promovări', sub:'Modificări grad', value: report.promotionCount, color:'61,220,132',
                   icon: <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/> },
                 { label:'Inactivi', sub:'Status inactiv/concediu', value: report.inactiveCount, color:'99,102,241',
                   icon: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></> },
@@ -245,12 +245,12 @@ export default function ReportsPage() {
                   <svg viewBox={`0 0 ${W} ${H}`} className={styles.chart} preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="rgba(139,92,246,0.35)"/>
+                        <stop offset="0%" stopColor="rgba(157,123,255,0.35)"/>
                         <stop offset="100%" stopColor="rgba(139,92,246,0)"/>
                       </linearGradient>
                     </defs>
                     <path d={areaPath} fill="url(#areaGrad)"/>
-                    <path d={linePath} fill="none" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round"/>
+                    <path d={linePath} fill="none" stroke="#9d7bff" strokeWidth="2.5" strokeLinecap="round"/>
                     {points.map((p,i) => {
                       const isToday = p.date.toDateString() === todayStr;
                       return (
@@ -260,22 +260,22 @@ export default function ReportsPage() {
                             fill="transparent"
                             onMouseEnter={() => setHoverPoint(i)} onMouseLeave={() => setHoverPoint(null)}/>
                           <circle cx={p.x} cy={p.y} r={hoverPoint===i ? 5.5 : 3.5}
-                            fill={p.count>0 ? '#a78bfa' : 'rgba(255,255,255,.18)'}
+                            fill={p.count>0 ? '#9d7bff' : 'rgba(255,255,255,.18)'}
                             stroke={hoverPoint===i ? '#fff' : 'none'} strokeWidth="1.5"
                             style={{ transition:'r .15s', pointerEvents:'none' }}/>
                           {hoverPoint === i && (
                             <g style={{ pointerEvents:'none' }}>
-                              <rect x={p.x-24} y={p.y-40} width="48" height="26" rx="7" fill="#13112a" stroke="rgba(139,92,246,.45)"/>
-                              <text x={p.x} y={p.y-22} textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="var(--font-display)">{p.count}</text>
+                              <rect x={p.x-24} y={p.y-40} width="48" height="26" rx="13" fill="var(--bg4)" stroke="rgba(157,123,255,.45)"/>
+                              <text x={p.x} y={p.y-22} textAnchor="middle" fill="var(--t1)" fontSize="14" fontWeight="700" fontFamily="var(--font-display)">{p.count}</text>
                             </g>
                           )}
                           {/* Day label + number, integrated in same coordinate system */}
                           <text x={p.x} y={H - 26} textAnchor="middle" fontSize="13" fontWeight="600"
-                            fill={isToday ? '#a78bfa' : 'rgba(255,255,255,.32)'} fontFamily="var(--font-body)">
+                            fill={isToday ? '#9d7bff' : 'rgba(255,255,255,.32)'} fontFamily="var(--font-body)">
                             {p.label}
                           </text>
                           <text x={p.x} y={H - 9} textAnchor="middle" fontSize="13" fontWeight="800"
-                            fill={isToday ? '#a78bfa' : 'rgba(255,255,255,.45)'} fontFamily="var(--font-display)">
+                            fill={isToday ? '#9d7bff' : 'rgba(255,255,255,.45)'} fontFamily="var(--font-display)">
                             {p.dayNum}
                           </text>
                         </g>

@@ -10,22 +10,22 @@ import { db } from '../../lib/firebase';
 
 const GRADE_OPTIONS = ['Membru PR', 'Adjunct PR', 'Manager PR', 'Supervizor PR', 'Conducere Spital'];
 const GRADE_COLORS  = {
-  'Membru PR':        '#8b5cf6',
+  'Membru PR':        '#9d7bff',
   'Adjunct PR':       '#6366f1',
-  'Manager PR':       '#f59e0b',
-  'Supervizor PR':    '#3b82f6',
-  'Conducere Spital': '#10b981',
+  'Manager PR':       '#ffb454',
+  'Supervizor PR':    '#5eb3f5',
+  'Conducere Spital': '#3ddc84',
 };
 const EMPTY_FORM = { discord_id: '', full_name: '', rank: 'Membru PR', employee_id: '', callsign: '', join_date: '' };
 
 function FormModal({ title, onSubmit, form, setForm, saving, onClose }) {
   const GRADE_OPTIONS = ['Membru PR', 'Adjunct PR', 'Manager PR', 'Supervizor PR', 'Conducere Spital'];
   const GRADE_COLORS  = {
-    'Membru PR':        '#8b5cf6',
+    'Membru PR':        '#9d7bff',
     'Adjunct PR':       '#6366f1',
-    'Manager PR':       '#f59e0b',
-    'Supervizor PR':    '#3b82f6',
-    'Conducere Spital': '#10b981',
+    'Manager PR':       '#ffb454',
+    'Supervizor PR':    '#5eb3f5',
+    'Conducere Spital': '#3ddc84',
   };
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -254,7 +254,7 @@ export default function WhitelistPage() {
               </thead>
               <tbody>
                 {filtered.map((e, i) => {
-                  const color = GRADE_COLORS[e.rank] || '#8b5cf6';
+                  const color = GRADE_COLORS[e.rank] || '#9d7bff';
                   return (
                     <tr key={e.id} className={styles.row} style={{ animationDelay: `${i * .03}s` }}>
                       <td className={styles.rowNum}>{i + 1}</td>

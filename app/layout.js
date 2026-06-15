@@ -21,6 +21,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ro" className={`${syne.variable} ${dmSans.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            try {
+              var t = localStorage.getItem('pr_theme');
+              if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+            } catch (e) {}
+          })();
+        ` }} />
+      </head>
       <body>{children}</body>
     </html>
   );

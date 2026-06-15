@@ -153,7 +153,7 @@ export default function Dashboard() {
   }
 
   const maxDist = Math.max(...(data?.dist.map(d => d.count) || [1]), 1);
-  const DIST_COLORS = ['#8b5cf6','#6366f1','#f59e0b'];
+  const DIST_COLORS = ['#9d7bff','#6366f1','#ffb454'];
 
   return (
     <div className={styles.root}>
@@ -168,10 +168,10 @@ export default function Dashboard() {
             {/* Stat cards */}
             <div className={styles.statsRow}>
               {[
-                { label:'Total Membri PR', value: data.totalPR, color:'#8b5cf6', icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' },
-                { label:'Membri Activi',   value: data.active,  color:'#22c55e', icon:'M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' },
-                { label:'Conducere PR',    value: data.leadership, color:'#6366f1', sub:`${data.mgr} mgr · ${data.adj} adj`, icon:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-                { label:'Ev. Săptămâna',  value: data.weekEvents, color:'#f59e0b', icon:'M3 4h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM16 2v4M8 2v4M2 10h20' },
+                { label:'Total Membri PR', value: data.totalPR, color:'157,123,255', icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' },
+                { label:'Membri Activi',   value: data.active,  color:'61,220,132', icon:'M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' },
+                { label:'Conducere PR',    value: data.leadership, color:'99,102,241', sub:`${data.mgr} mgr · ${data.adj} adj`, icon:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+                { label:'Ev. Săptămâna',  value: data.weekEvents, color:'255,180,84', icon:'M3 4h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM16 2v4M8 2v4M2 10h20' },
               ].map((s, i) => (
                 <div key={s.label} className={styles.statCard} style={{ '--c': s.color, animationDelay:`${i*.06}s` }}>
                   <div className={styles.statIcon}>
@@ -228,7 +228,7 @@ export default function Dashboard() {
                           <span className={styles.recentName}>{m.full_name}</span>
                           <span className={styles.recentRank}>{m.rank}</span>
                         </div>
-                        <span className={styles.recentStatus} style={{ color: isActive ? '#4ade80' : '#94a3b8', background: isActive ? 'rgba(34,197,94,.1)' : 'rgba(148,163,184,.08)', borderColor: isActive ? 'rgba(34,197,94,.2)' : 'rgba(148,163,184,.15)' }}>
+                        <span className={styles.recentStatus} style={{ color: isActive ? 'var(--green)' : 'var(--t3)', background: isActive ? 'rgba(61,220,132,.12)' : 'var(--surface2)', borderColor: isActive ? 'rgba(61,220,132,.25)' : 'var(--border3)' }}>
                           {m.status || '—'}
                         </span>
                       </div>
@@ -252,7 +252,7 @@ export default function Dashboard() {
                   {data.announcements.length === 0 && <p className={styles.empty}>Niciun anunț.</p>}
                   {data.announcements.map(a => (
                     <div key={a.id} className={styles.feedItem}>
-                      <div className={styles.feedDot} style={{ background:'#8b5cf6' }}/>
+                      <div className={styles.feedDot} style={{ background:'var(--p)' }}/>
                       <div className={styles.feedContent}>
                         <div className={styles.feedTitle}>{a.title}</div>
                         <div className={styles.feedBody}>{a.body}</div>
@@ -279,7 +279,7 @@ export default function Dashboard() {
                   {data.sysUpdates.length === 0 && <p className={styles.empty}>Nicio actualizare.</p>}
                   {data.sysUpdates.map(u => (
                     <div key={u.id} className={styles.feedItem}>
-                      <div className={styles.feedDot} style={{ background:'#f59e0b' }}/>
+                      <div className={styles.feedDot} style={{ background:'var(--amber)' }}/>
                       <div className={styles.feedContent}>
                         <div className={styles.feedTitle}>{u.title}</div>
                         <div className={styles.feedBody}>{u.body}</div>
