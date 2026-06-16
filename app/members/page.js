@@ -125,13 +125,17 @@ export default function MembersPage() {
           changed_by:  user.full_name,
           date:        new Date().toISOString(),
         });
-        pushNotification('promotion', `${editForm.full_name||editTarget.full_name}: ${editTarget.rank} → ${editForm.rank}`);
+        if (editTarget.discord_id) {
+          pushNotification('promotion', `Gradul tău a fost modificat: ${editTarget.rank} → ${editForm.rank}`, editTarget.discord_id);
+        }
       } else if (
         editForm.full_name !== editTarget.full_name ||
         editForm.callsign !== editTarget.callsign ||
         editForm.employee_id !== editTarget.employee_id
       ) {
-        pushNotification('account', `Contul lui ${editForm.full_name||editTarget.full_name} a fost actualizat`);
+        if (editTarget.discord_id) {
+          pushNotification('account', `Contul tău a fost actualizat de ${user.full_name}`, editTarget.discord_id);
+        }
       }
 
       // Istoric inactivitate — dacă statusul devine Inactiv/Concediu (rămâne înregistrat permanent)

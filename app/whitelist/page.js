@@ -248,7 +248,7 @@ export default function WhitelistPage() {
               <thead>
                 <tr>
                   <th>#</th><th>Nume Complet</th><th>Discord ID</th><th>Grad</th>
-                  <th>ID Angajat</th><th>Callsign</th><th>Data Intrării</th>
+                  <th>ID</th><th>Callsign</th><th>Data Intrării</th>
                   <th>Adăugat de</th><th style={{ textAlign: 'right' }}>Acțiuni</th>
                 </tr>
               </thead>

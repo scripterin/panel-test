@@ -41,12 +41,14 @@ export default function TopBar({ user: initialUser, title = '', isHub = false })
   }, [initialUser?.discord_id]);
 
   useEffect(() => {
-    const q = query(collection(db, 'notifications'), orderBy('created_at', 'desc'), limit(20));
+    if (!user?.discord_id) return;
+    const q = query(collection(db, 'notifications'), orderBy('created_at', 'desc'), limit(40));
     const unsub = onSnapshot(q, (snap) => {
-      setNotifs(snap.docs.map(d => ({ id:d.id, ...d.data() })));
+      const all = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      setNotifs(all.filter(n => n.target_discord_id === user.discord_id));
     });
     return unsub;
-  }, []);
+  }, [user?.discord_id]);
 
   useEffect(() => {
     function onClickOutside(e) {
@@ -103,19 +105,13 @@ export default function TopBar({ user: initialUser, title = '', isHub = false })
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </span>
-        <span className={styles.themeKnob}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" width="11" height="11">
-            {theme === 'light'
-              ? <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></>
-              : <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>}
-          </svg>
-        </span>
         <span className={styles.themeIconWrap}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13">
             <circle cx="12" cy="12" r="4"/>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </span>
+        <span className={styles.themeKnob}/>
       </button>
 
       <div className={styles.right}>
@@ -169,8 +165,15 @@ function timeAgo(iso) {
   return `${Math.floor(diff/86400)}z`;
 }
 
-export async function pushNotification(type, title) {
+export async function pushNotification(type, title, targetDiscordIds) {
   try {
-    await addDoc(collection(db, 'notifications'), { type, title, created_at: new Date().toISOString() });
+    const targets = Array.isArray(targetDiscordIds) ? targetDiscordIds : [targetDiscordIds];
+    await Promise.all(
+      targets.filter(Boolean).map(targetId =>
+        addDoc(collection(db, 'notifications'), {
+          type, title, target_discord_id: targetId, created_at: new Date().toISOString(),
+        })
+      )
+    );
   } catch (e) { console.error('notif error', e); }
 }

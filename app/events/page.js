@@ -144,7 +144,8 @@ export default function EventsPage() {
         created_by: user.full_name, created_at: new Date().toISOString(),
         event_status: 'in_asteptare', financial_status: 'neincasat',
       });
-      pushNotification('event', `${user.full_name} a postat un eveniment nou: ${form.type}`);
+      const allTargets = members.map(m => m.discord_id).filter(Boolean);
+      pushNotification('event', `${user.full_name} a postat un eveniment nou: ${form.type}`, allTargets);
       showToast('Eveniment postat!');
       setPostModal(false);
       setForm({ date:'', time:'', type:'', organizer_name:'', location:'', phone:'', assistance_type:'medical_1', image_url:'' });
@@ -164,7 +165,9 @@ export default function EventsPage() {
         member_name: member?.full_name||'', event_date: offerForm.event_date,
         offered_by: user.full_name, created_at: new Date().toISOString(),
       });
-      pushNotification('offer', `${user.full_name} i-a oferit un eveniment lui ${member?.full_name||'membru'}`);
+      if (member?.discord_id) {
+        pushNotification('offer', `${user.full_name} ți-a oferit un eveniment`, member.discord_id);
+      }
       showToast('Eveniment oferit!'); setOfferModal(false); setOfferForm({ member_id:'', event_date:'' });
     } catch (e) { showToast('Eroare.','error'); }
     setSaving(false);
