@@ -11,9 +11,9 @@
 .aurora {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 15%, rgba(139,92,246,.22) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 45% at 85% 75%, rgba(99,102,241,.16) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 60% 30%, rgba(236,72,153,.07) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 50% at 20% 15%, rgba(157,123,255,.2) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 85% 75%, rgba(99,102,241,.14) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 60% 30%, rgba(255,138,198,.06) 0%, transparent 60%);
   animation: auroraShift 16s ease-in-out infinite alternate;
 }
 @keyframes auroraShift {
@@ -48,7 +48,7 @@
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  filter: drop-shadow(0 0 36px rgba(139,92,246,.45));
+  filter: drop-shadow(0 0 40px rgba(157,123,255,.4));
 }
 
 /* ── Title ── */
@@ -72,22 +72,22 @@
 
 /* ── Card ── */
 .card {
-  width: 380px;
+  width: 400px;
   max-width: 90vw;
-  background: var(--surface);
+  background: var(--surface2);
   border: 1px solid var(--border3);
-  border-radius: var(--radius-lg);
-  padding: 28px 26px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 24px 60px rgba(0,0,0,.4);
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  border-radius: var(--radius-xl);
+  padding: 32px 30px;
+  backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-pop);
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
 }
 
 /* ── Alert ── */
 .alert {
   width: 100%;
   display: flex; align-items: flex-start; gap: 11px;
-  padding: 13px 15px; border-radius: 12px;
+  padding: 14px 18px; border-radius: var(--radius-lg);
   font-size: 12px; line-height: 1.5;
   background: rgba(var(--ac, 239,68,68), .08);
   border: 1px solid rgba(var(--ac, 239,68,68), .22);
@@ -102,9 +102,9 @@
 /* ── Discord button ── */
 .discordBtn {
   position: relative; width: 100%;
-  padding: 15px 24px; border-radius: 13px; border: none;
+  padding: 17px 24px; border-radius: var(--radius-pill); border: none;
   cursor: pointer;
-  font-family: var(--font-body); font-size: 14px; font-weight: 600;
+  font-family: var(--font-body); font-size: 15px; font-weight: 700;
   letter-spacing: .2px; color: #fff;
   display: flex; align-items: center; justify-content: center; gap: 10px;
   background: linear-gradient(135deg, #5865F2 0%, #4752c4 100%);

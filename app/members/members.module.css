@@ -16,14 +16,6 @@
   background: radial-gradient(circle, rgba(99,102,241,.04) 0%, transparent 65%);
   pointer-events: none; z-index: 0;
 }
-.bgGrid {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(139,92,246,.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139,92,246,.02) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
 /* ── Main ── */
 .main { padding: 88px 24px 40px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
 

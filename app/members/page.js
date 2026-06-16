@@ -168,7 +168,7 @@ export default function MembersPage() {
 
   return (
     <div className={styles.root}>
-      <div className={styles.bgOrb1}/><div className={styles.bgOrb2}/><div className={styles.bgGrid}/>
+      <div className={styles.bgOrb1}/><div className={styles.bgOrb2}/>
 
       
 

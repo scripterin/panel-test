@@ -119,3 +119,8 @@ img { max-width: 100%; display: block; }
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Desktop scale-up: la 100% zoom totul era prea mic ── */
+@media (min-width: 1024px) {
+  body { zoom: 1.12; }
+}
