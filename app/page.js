@@ -72,7 +72,6 @@ function LoginInner() {
         </div>
       </div>
 
-      <div className={styles.footer}>Panel PR &copy; {new Date().getFullYear()} · Sistem Intern</div>
     </main>
   );
 }
