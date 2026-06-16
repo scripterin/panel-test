@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { collection, doc, addDoc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import styles from './members.module.css';
-import TopBar from '../../components/TopBar';
+import TopBar, { pushNotification } from '../../components/TopBar';
 
 
 const ALL_GRADES   = ['Conducere Spital', 'Supervizor PR', 'Manager PR', 'Adjunct PR', 'Membru PR'];
@@ -125,6 +125,13 @@ export default function MembersPage() {
           changed_by:  user.full_name,
           date:        new Date().toISOString(),
         });
+        pushNotification('promotion', `${editForm.full_name||editTarget.full_name}: ${editTarget.rank} → ${editForm.rank}`);
+      } else if (
+        editForm.full_name !== editTarget.full_name ||
+        editForm.callsign !== editTarget.callsign ||
+        editForm.employee_id !== editTarget.employee_id
+      ) {
+        pushNotification('account', `Contul lui ${editForm.full_name||editTarget.full_name} a fost actualizat`);
       }
 
       // Istoric inactivitate — dacă statusul devine Inactiv/Concediu (rămâne înregistrat permanent)

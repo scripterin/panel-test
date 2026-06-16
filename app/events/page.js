@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { collection, doc, addDoc, updateDoc, setDoc, deleteDoc, getDoc, onSnapshot, query, orderBy, where } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import TopBar from '../../components/TopBar';
+import TopBar, { pushNotification } from '../../components/TopBar';
 import styles from './events.module.css';
 
 const CAN_MANAGE = ['Adjunct PR', 'Manager PR', 'Supervizor PR', 'Conducere Spital'];
@@ -144,6 +144,7 @@ export default function EventsPage() {
         created_by: user.full_name, created_at: new Date().toISOString(),
         event_status: 'in_asteptare', financial_status: 'neincasat',
       });
+      pushNotification('event', `${user.full_name} a postat un eveniment nou: ${form.type}`);
       showToast('Eveniment postat!');
       setPostModal(false);
       setForm({ date:'', time:'', type:'', organizer_name:'', location:'', phone:'', assistance_type:'medical_1', image_url:'' });
@@ -163,6 +164,7 @@ export default function EventsPage() {
         member_name: member?.full_name||'', event_date: offerForm.event_date,
         offered_by: user.full_name, created_at: new Date().toISOString(),
       });
+      pushNotification('offer', `${user.full_name} i-a oferit un eveniment lui ${member?.full_name||'membru'}`);
       showToast('Eveniment oferit!'); setOfferModal(false); setOfferForm({ member_id:'', event_date:'' });
     } catch (e) { showToast('Eroare.','error'); }
     setSaving(false);

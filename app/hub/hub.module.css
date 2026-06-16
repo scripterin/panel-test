@@ -23,7 +23,7 @@
 .main {
   position: relative; z-index: 5;
   max-width: 1180px; margin: 0 auto;
-  padding: 96px 24px 40px;
+  padding: 84px 24px 40px;
   display: flex; flex-direction: column; gap: 18px;
 }
 

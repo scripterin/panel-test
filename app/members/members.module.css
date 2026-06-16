@@ -17,7 +17,7 @@
   pointer-events: none; z-index: 0;
 }
 /* ── Main ── */
-.main { padding: 88px 24px 40px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+.main { padding: 84px 24px 40px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
 
 /* ── Header ── */
 .header {

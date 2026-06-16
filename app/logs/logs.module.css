@@ -1,7 +1,7 @@
 .root{min-height:100vh;background:var(--bg);font-family:var(--font-body);position:relative;overflow:hidden;}
 .bg1{position:fixed;top:-180px;left:-120px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--p5) 0%,transparent 65%);pointer-events:none;z-index:0;}
 .bg2{position:fixed;bottom:-150px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.04) 0%,transparent 65%);pointer-events:none;z-index:0;}
-.main{position:relative;z-index:1;padding:96px 24px 40px;max-width:1100px;margin:0 auto;}
+.main{position:relative;z-index:1;padding:84px 24px 40px;max-width:1100px;margin:0 auto;}
 
 .topRow{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
 .searchWrap{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border3);border-radius:var(--radius-pill);padding:11px 18px;flex:1;max-width:380px;transition:border-color .2s;}
