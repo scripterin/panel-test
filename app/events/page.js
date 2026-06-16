@@ -297,10 +297,10 @@ export default function EventsPage() {
             <div className={styles.mform}>
               <Field label="Data *"><input type="date" className={styles.inp} value={form.date} onChange={e=>setForm(f=>({...f,date:e.target.value}))}/></Field>
               <Field label="Ora *"><input type="time" className={styles.inp} value={form.time} onChange={e=>setForm(f=>({...f,time:e.target.value}))}/></Field>
-              <Field label="Tip Eveniment *"><input className={styles.inp} placeholder="ex: Nuntă..." value={form.type} onChange={e=>setForm(f=>({...f,type:e.target.value}))}/></Field>
+              <Field label="Tip Eveniment *"><input className={styles.inp} placeholder="Box" value={form.type} onChange={e=>setForm(f=>({...f,type:e.target.value}))}/></Field>
               <Field label="Organizator *"><input className={styles.inp} placeholder="Nume Prenume" value={form.organizer_name} onChange={e=>setForm(f=>({...f,organizer_name:e.target.value}))}/></Field>
               <Field label="Locație *"><input className={styles.inp} placeholder="Adresa" value={form.location} onChange={e=>setForm(f=>({...f,location:e.target.value}))}/></Field>
-              <Field label="Telefon *"><input className={styles.inp} placeholder="07xx..." value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))}/></Field>
+              <Field label="Telefon *"><input className={styles.inp} placeholder="123-4567" value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))}/></Field>
               <div className={styles.fullField}>
                 <div className={styles.flabel}>Tip Asistență *</div>
                 <div className={styles.assistGrid}>

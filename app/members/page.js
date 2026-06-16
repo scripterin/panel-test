@@ -255,12 +255,12 @@ export default function MembersPage() {
                 </div>
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>ID Angajat</label>
-                <input className={styles.input} placeholder="ex: PR-001" value={editForm.employee_id} onChange={e => setEditForm(f => ({ ...f, employee_id: e.target.value }))}/>
+                <label className={styles.label}>ID</label>
+                <input className={styles.input} placeholder="7920" value={editForm.employee_id} onChange={e => setEditForm(f => ({ ...f, employee_id: e.target.value }))}/>
               </div>
               <div className={styles.field}>
                 <label className={styles.label}>Callsign</label>
-                <input className={styles.input} placeholder="ex: PR-7" value={editForm.callsign} onChange={e => setEditForm(f => ({ ...f, callsign: e.target.value }))}/>
+                <input className={styles.input} placeholder="M-220" value={editForm.callsign} onChange={e => setEditForm(f => ({ ...f, callsign: e.target.value }))}/>
               </div>
               <div className={`${styles.field} ${styles.fieldFull}`}>
                 <label className={styles.label}>Discord ID</label>
@@ -313,7 +313,7 @@ function MemberSection({ title, members, accent, canEdit, onEdit, statusColors }
           <thead>
             <tr>
               <th>Membru</th><th>Grad</th><th>Status</th>
-              <th>ID Angajat</th><th>Callsign</th><th>Discord ID</th>
+              <th>ID</th><th>Callsign</th><th>Discord ID</th>
               <th>Data Angajării</th>
               {canEdit && <th style={{ textAlign: 'right' }}>Acțiuni</th>}
             </tr>

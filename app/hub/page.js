@@ -209,7 +209,6 @@ export default function HubPage() {
         </div>
       </main>
 
-      <div className={styles.footer}>Panel PR · Sistem Management</div>
     </div>
   );
 }

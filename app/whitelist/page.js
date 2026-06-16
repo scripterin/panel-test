@@ -55,13 +55,13 @@ function FormModal({ title, onSubmit, form, setForm, saving, onClose }) {
             </select>
           </div>
           <div className={styles.field}>
-            <label className={styles.label}>ID Angajat</label>
-            <input className={styles.input} placeholder="ex: PR-001"
+            <label className={styles.label}>ID</label>
+            <input className={styles.input} placeholder="7920"
               value={form.employee_id} onChange={e => setForm(f => ({ ...f, employee_id: e.target.value }))}/>
           </div>
           <div className={styles.field}>
             <label className={styles.label}>Callsign</label>
-            <input className={styles.input} placeholder="ex: PR-7"
+            <input className={styles.input} placeholder="M-220"
               value={form.callsign} onChange={e => setForm(f => ({ ...f, callsign: e.target.value }))}/>
           </div>
           <div className={styles.field}>
